@@ -103,4 +103,34 @@ FROM employees e
 JOIN departments d ON e.department = d.code
 WHERE d.budget = (SELECT MIN(budget) FROM departments);
 
-SELECT name, lastname FROM employees
+--14--
+SELECT name, lastname
+FROM employees
+WHERE city = 'Almaty'
+UNION
+SELECT name, lastname
+FROM customers
+WHERE city = 'Almaty';
+
+--15--
+SELECT *
+FROM departments
+WHERE budget > 60000
+ORDER BY budget ASC, code DESC;
+
+--16--
+UPDATE departments
+SET budget = budget * 0.9
+WHERE budget = (SELECT MIN(budget) FROM departments);
+
+--17--
+UPDATE employees
+SET department = (SELECT code FROM departments WHERE name = 'IT')
+WHERE department = (SELECT code FROM departments WHERE name = 'Research');
+
+--18--
+DELETE FROM employees
+WHERE department = (SELECT code FROM departments WHERE name = 'IT');
+
+--19--
+DELETE FROM employees;
